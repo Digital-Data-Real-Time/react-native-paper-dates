@@ -18,7 +18,9 @@ export function useLatest<T>(value: T) {
 export function useHeaderBackgroundColor() {
   const theme = useTheme()
   if (theme.isV3) {
-    return theme.colors.surface
+    // NOTE: not follows m3 spec
+    // return theme.colors.surface
+    return theme.colors.elevation.level3
   }
   return theme.dark && theme.mode === 'adaptive'
     ? overlay(4, theme.colors.surface)

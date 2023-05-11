@@ -8,6 +8,7 @@ import Color from 'color'
 import { getTranslation } from '../translations/utils'
 
 export interface HeaderPickProps {
+  fullScreen?: boolean
   moreLabel?: string
   label?: string
   emptyLabel?: string
@@ -62,6 +63,7 @@ export default function DatePickerModalContentHeader(
     editIcon,
     calendarIcon,
     allowEditing,
+    fullScreen,
   } = props
   const theme = useTheme()
   const label = getLabel(props.locale, props.mode, props.label)
@@ -77,14 +79,28 @@ export default function DatePickerModalContentHeader(
     : (theme as any as MD2Theme).fonts.medium
 
   return (
-    <View style={styles.header}>
+    <View
+      style={
+        fullScreen
+          ? styles.header
+          : [
+              styles.headerOnDialog,
+              { borderBottomColor: theme.colors.outlineVariant },
+            ]
+      }
+    >
       <View>
         <Text
           style={[styles.label, { color: supportingTextColor, ...textFont }]}
         >
           {uppercase ? label.toUpperCase() : label}
         </Text>
-        <View style={styles.headerContentContainer}>
+        <View
+          style={[
+            styles.headerContentContainer,
+            !fullScreen && { marginTop: 36 },
+          ]}
+        >
           {mode === 'range' ? (
             <HeaderContentRange {...props} color={color} />
           ) : null}
@@ -119,6 +135,7 @@ export default function DatePickerModalContentHeader(
           }
           iconColor={theme.isV3 ? theme.colors.onSurface : color}
           onPress={onToggle}
+          style={!fullScreen && { marginTop: 58 }}
         />
       ) : null}
     </View>
@@ -249,6 +266,15 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     paddingLeft: 24,
     paddingRight: 12,
+  },
+  headerOnDialog: {
+    height: 120,
+    alignItems: 'center',
+    flexDirection: 'row',
+    paddingLeft: 36,
+    paddingRight: 12,
+    paddingVertical: 12,
+    borderBottomWidth: 1,
   },
   headerContentContainer: { marginTop: 5, flexDirection: 'row' },
   label: { color: '#fff', letterSpacing: 1, fontSize: 13 },

@@ -19,6 +19,7 @@ import { useHeaderBackgroundColor, useHeaderColorIsLight } from '../utils'
 
 interface DatePickerModalProps {
   visible: boolean
+  fullScreen?: boolean
   animationType?: 'slide' | 'fade' | 'none'
   disableStatusBar?: boolean
   disableStatusBarPadding?: boolean
@@ -51,6 +52,7 @@ export function DatePickerModal(
     disableStatusBar,
     disableStatusBarPadding,
     inputEnabled,
+    fullScreen = true,
     ...rest
   } = props
   const animationTypeCalculated =
@@ -70,7 +72,7 @@ export function DatePickerModal(
         transparent={true}
         visible={visible}
         onRequestClose={rest.onDismiss}
-        presentationStyle="overFullScreen"
+        // presentationStyle="overFullScreen"
         supportedOrientations={supportedOrientations}
         //@ts-ignore
         statusBarTranslucent={true}
@@ -92,8 +94,10 @@ export function DatePickerModal(
             <View
               style={[
                 styles.modalContent,
-                { backgroundColor: theme.colors.surface },
+                // { backgroundColor: theme.colors.surface },
+                { backgroundColor: theme.colors.elevation.level3 },
                 dimensions.width > 650 ? styles.modalContentBig : null,
+                fullScreen ? null : styles.modalContentDialog,
               ]}
             >
               {disableStatusBar ? null : (
@@ -102,7 +106,7 @@ export function DatePickerModal(
                   barStyle={isLight ? 'dark-content' : 'light-content'}
                 />
               )}
-              {disableStatusBarPadding ? null : (
+              {disableStatusBarPadding || !fullScreen ? null : (
                 <View
                   style={[
                     {
@@ -114,8 +118,9 @@ export function DatePickerModal(
               )}
               <DatePickerModalContent
                 {...rest}
+                fullScreen={fullScreen}
                 inputEnabled={inputEnabled}
-                disableSafeTop={disableStatusBar}
+                disableSafeTop={!fullScreen || disableStatusBar}
               />
             </View>
           </View>
@@ -151,6 +156,12 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     width: '100%',
     overflow: 'hidden',
+  },
+  modalContentDialog: {
+    flex: 0,
+    height: 542,
+    width: 328,
+    paddingBottom: 8,
   },
 })
 

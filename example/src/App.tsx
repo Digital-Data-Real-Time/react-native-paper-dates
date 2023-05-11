@@ -18,6 +18,8 @@ import {
   overlay,
   Paragraph,
   Portal,
+  Switch,
+  MD3DarkTheme,
 } from 'react-native-paper'
 
 import {
@@ -54,6 +56,8 @@ function App() {
   }>({ hours: undefined, minutes: undefined })
   const [timeOpen, setTimeOpen] = React.useState(false)
   const [rangeOpen, setRangeOpen] = React.useState(false)
+
+  const [fullScreen, setFullScreen] = React.useState(false)
 
   const [singleOpen, setSingleOpen] = React.useState(false)
   const [customOpen, setCustomOpen] = React.useState(false)
@@ -220,6 +224,11 @@ function App() {
           </View>
           <Enter />
           <Enter />
+
+          <View style={styles.fullScreenOptionContainer}>
+            <Text>Fullscreen</Text>
+            <Switch value={fullScreen} onValueChange={setFullScreen} />
+          </View>
           <View style={styles.buttons}>
             <Button
               onPress={() => setSingleOpen(true)}
@@ -291,6 +300,7 @@ function App() {
 
       <DatePickerModal
         locale={locale}
+        fullScreen={fullScreen}
         mode="range"
         visible={rangeOpen}
         onDismiss={onDismissRange}
@@ -312,6 +322,7 @@ function App() {
 
       <DatePickerModal
         locale={locale}
+        fullScreen={fullScreen}
         mode="single"
         visible={singleOpen}
         onDismiss={onDismissSingle}
@@ -335,6 +346,7 @@ function App() {
 
       <DatePickerModal
         locale={locale}
+        fullScreen={fullScreen}
         mode="multiple"
         visible={multiOpen}
         onDismiss={onDismissMulti}
@@ -384,7 +396,8 @@ function Label({ children }: { children: string }) {
   )
 }
 
-const theme = { version: 3 }
+// const theme = { version: 3 }
+const theme = MD3DarkTheme
 export default function AppWithProviders() {
   return (
     <SafeAreaProvider>
@@ -469,5 +482,10 @@ const styles = StyleSheet.create({
     shadowRadius: 3.84,
 
     elevation: 5,
+  },
+  fullScreenOptionContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
 })

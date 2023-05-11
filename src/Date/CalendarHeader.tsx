@@ -44,7 +44,8 @@ function CalendarHeader({
           <View
             style={[
               styles.buttonWrapper,
-              { backgroundColor: theme.colors.surface },
+              // { backgroundColor: theme.colors.surface },
+              { backgroundColor: theme.colors.elevation.level3 },
             ]}
           >
             <IconButton
@@ -56,7 +57,8 @@ function CalendarHeader({
           <View
             style={[
               styles.buttonWrapper,
-              { backgroundColor: theme.colors.surface },
+              // { backgroundColor: theme.colors.surface },
+              { backgroundColor: theme.colors.elevation.level3 },
             ]}
           >
             <IconButton

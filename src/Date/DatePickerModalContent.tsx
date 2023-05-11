@@ -17,6 +17,8 @@ import DatePickerModalContentHeader, {
 } from './DatePickerModalContentHeader'
 import CalendarEdit from './CalendarEdit'
 import DatePickerModalHeaderBackground from './DatePickerModalHeaderBackground'
+import { StyleSheet, View } from 'react-native'
+import { Button } from 'react-native-paper'
 
 export type LocalState = {
   startDate: CalendarDate
@@ -33,6 +35,7 @@ interface DatePickerModalContentBaseProps {
   saveLabelDisabled?: boolean
   uppercase?: boolean
   inputEnabled?: boolean
+  fullScreen?: boolean
 }
 
 export interface DatePickerModalContentRangeProps
@@ -85,6 +88,7 @@ export function DatePickerModalContent(
     dateMode,
     startYear,
     endYear,
+    fullScreen,
   } = props
   const anyProps = props as any
 
@@ -140,17 +144,20 @@ export function DatePickerModalContent(
   return (
     <>
       <DatePickerModalHeaderBackground>
-        <DatePickerModalHeader
-          locale={locale}
-          onSave={onInnerConfirm}
-          onDismiss={onDismiss}
-          saveLabel={props.saveLabel}
-          saveLabelDisabled={props.saveLabelDisabled ?? false}
-          uppercase={props.uppercase ?? true}
-          disableSafeTop={disableSafeTop}
-          closeIcon={props.closeIcon}
-        />
+        {fullScreen && (
+          <DatePickerModalHeader
+            locale={locale}
+            onSave={onInnerConfirm}
+            onDismiss={onDismiss}
+            saveLabel={props.saveLabel}
+            saveLabelDisabled={props.saveLabelDisabled ?? false}
+            uppercase={props.uppercase ?? true}
+            disableSafeTop={disableSafeTop}
+            closeIcon={props.closeIcon}
+          />
+        )}
         <DatePickerModalContentHeader
+          fullScreen={fullScreen}
           state={state}
           mode={mode}
           collapsed={collapsed}
@@ -171,20 +178,22 @@ export function DatePickerModalContent(
       <AnimatedCrossView
         collapsed={collapsed}
         calendar={
-          <Calendar
-            locale={locale}
-            mode={mode}
-            startDate={state.startDate}
-            endDate={state.endDate}
-            date={state.date}
-            onChange={onInnerChange}
-            disableWeekDays={disableWeekDays}
-            dates={state.dates}
-            validRange={validRange}
-            dateMode={dateMode}
-            startYear={startYear}
-            endYear={endYear}
-          />
+          <View style={styles.calendarViewContainer}>
+            <Calendar
+              locale={locale}
+              mode={mode}
+              startDate={state.startDate}
+              endDate={state.endDate}
+              date={state.date}
+              onChange={onInnerChange}
+              disableWeekDays={disableWeekDays}
+              dates={state.dates}
+              validRange={validRange}
+              dateMode={dateMode}
+              startYear={startYear}
+              endYear={endYear}
+            />
+          </View>
         }
         calendarEdit={
           <CalendarEdit
@@ -201,8 +210,23 @@ export function DatePickerModalContent(
           />
         }
       />
+      {!fullScreen && (
+        <View style={styles.actions}>
+          <Button onPress={props.onDismiss}>Cancel</Button>
+          <Button onPress={onInnerConfirm}>OK</Button>
+        </View>
+      )}
     </>
   )
 }
+
+const styles = StyleSheet.create({
+  calendarViewContainer: { flex: 1 },
+  actions: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    height: 40,
+  },
+})
 
 export default React.memo(DatePickerModalContent)
