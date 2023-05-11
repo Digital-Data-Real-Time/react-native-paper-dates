@@ -11,6 +11,7 @@ function DatePickerInput(
   {
     withModal = true,
     calendarIcon = 'calendar',
+    modalFullScreen = true,
     ...rest
   }: DatePickerInputProps,
   ref: any
@@ -72,6 +73,7 @@ function DatePickerInput(
             startYear={startYear ?? 1800}
             endYear={endYear ?? 2200}
             inputEnabled={inputEnabled}
+            fullScreen={modalFullScreen}
           />
         ) : null
       }
