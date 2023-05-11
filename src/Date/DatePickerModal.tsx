@@ -72,7 +72,7 @@ export function DatePickerModal(
         transparent={true}
         visible={visible}
         onRequestClose={rest.onDismiss}
-        // presentationStyle="overFullScreen"
+        presentationStyle="overFullScreen"
         supportedOrientations={supportedOrientations}
         //@ts-ignore
         statusBarTranslucent={true}
@@ -100,7 +100,7 @@ export function DatePickerModal(
                 fullScreen ? null : styles.modalContentDialog,
               ]}
             >
-              {disableStatusBar ? null : (
+              {(disableStatusBar || !fullScreen) ? null : (
                 <StatusBar
                   translucent={true}
                   barStyle={isLight ? 'dark-content' : 'light-content'}

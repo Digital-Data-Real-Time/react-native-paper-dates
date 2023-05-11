@@ -385,6 +385,7 @@ exports[`renders DatePickerInput 1`] = `
       animationType="slide"
       hardwareAccelerated={false}
       onRequestClose={[Function]}
+      presentationStyle="overFullScreen"
       statusBarTranslucent={true}
       supportedOrientations={
         [
