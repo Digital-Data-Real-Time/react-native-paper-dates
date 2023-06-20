@@ -74,6 +74,7 @@ function DatePickerInput(
             endYear={endYear ?? 2200}
             inputEnabled={inputEnabled}
             fullScreen={modalFullScreen}
+            customTheme={rest.theme}
           />
         ) : null
       }
