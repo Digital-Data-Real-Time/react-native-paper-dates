@@ -41,6 +41,7 @@ function DatePickerInput(
             icon={calendarIcon}
             disabled={rest.disabled}
             onPress={() => setVisible(true)}
+            theme={rest.theme}
           />
         ) : null
       }

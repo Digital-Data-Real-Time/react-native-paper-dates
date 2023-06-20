@@ -15,6 +15,8 @@ import {
   MD2Theme,
   overlay,
   useTheme,
+  MD3Theme,
+  Provider
 } from 'react-native-paper'
 
 import TimePicker from './TimePicker'
@@ -57,6 +59,7 @@ export function TimePickerModal({
   clockIcon = 'clock-outline',
   use24HourClock,
   inputFontSize,
+  customTheme
 }: {
   locale?: undefined | string
   label?: string
@@ -73,8 +76,9 @@ export function TimePickerModal({
   clockIcon?: string
   use24HourClock?: boolean
   inputFontSize?: number
+  customTheme?: MD3Theme
 }) {
-  const theme = useTheme()
+  const theme = useTheme<MD3Theme>(customTheme)
 
   let textFont
   let labelText = label
@@ -137,7 +141,7 @@ export function TimePickerModal({
       supportedOrientations={supportedOrientations}
       statusBarTranslucent={true}
     >
-      <>
+      <Provider theme={customTheme}>
         <TouchableWithoutFeedback onPress={onDismiss}>
           <View
             style={[
@@ -228,7 +232,7 @@ export function TimePickerModal({
             </Animated.View>
           </KeyboardAvoidingView>
         </View>
-      </>
+      </Provider>
     </Modal>
   )
 }
