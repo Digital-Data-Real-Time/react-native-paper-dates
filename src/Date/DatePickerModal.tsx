@@ -84,7 +84,7 @@ export function DatePickerModal(
               style={[
                 StyleSheet.absoluteFill,
                 styles.modalBackground,
-                { backgroundColor: theme.colors.backdrop },
+                { backgroundColor: theme.colors.backdrop as string },
               ]}
             />
           </TouchableWithoutFeedback>
@@ -96,7 +96,7 @@ export function DatePickerModal(
               style={[
                 styles.modalContent,
                 // { backgroundColor: theme.colors.surface },
-                { backgroundColor: theme.colors.elevation.level3 },
+                { backgroundColor: theme.colors.elevation.level3 as string },
                 dimensions.width > 650 ? styles.modalContentBig : null,
                 fullScreen ? null : styles.modalContentDialog,
               ]}
