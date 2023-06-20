@@ -9,7 +9,7 @@ import {
   StatusBar,
 } from 'react-native'
 
-import { useTheme } from 'react-native-paper'
+import { MD3Theme, Provider, useTheme } from 'react-native-paper'
 import DatePickerModalContent, {
   DatePickerModalContentMultiProps,
   DatePickerModalContentRangeProps,
@@ -24,6 +24,7 @@ interface DatePickerModalProps {
   disableStatusBar?: boolean
   disableStatusBarPadding?: boolean
   inputEnabled?: boolean
+  customTheme?: MD3Theme
 }
 
 export interface DatePickerModalSingleProps
@@ -44,7 +45,7 @@ export function DatePickerModal(
     | DatePickerModalSingleProps
     | DatePickerModalMultiProps
 ) {
-  const theme = useTheme()
+  const theme = useTheme(props.customTheme)
   const dimensions = useWindowDimensions()
   const {
     visible,
@@ -77,7 +78,7 @@ export function DatePickerModal(
         //@ts-ignore
         statusBarTranslucent={true}
       >
-        <>
+        <Provider theme={props.customTheme}>
           <TouchableWithoutFeedback onPress={rest.onDismiss}>
             <View
               style={[
@@ -100,7 +101,7 @@ export function DatePickerModal(
                 fullScreen ? null : styles.modalContentDialog,
               ]}
             >
-              {(disableStatusBar || !fullScreen) ? null : (
+              {disableStatusBar || !fullScreen ? null : (
                 <StatusBar
                   translucent={true}
                   barStyle={isLight ? 'dark-content' : 'light-content'}
@@ -124,7 +125,7 @@ export function DatePickerModal(
               />
             </View>
           </View>
-        </>
+        </Provider>
       </Modal>
     </View>
   )
